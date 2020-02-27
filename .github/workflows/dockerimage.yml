@@ -1,6 +1,7 @@
 name: Build Ngrok Image
 
 on:
+  repository_dispatch: {}
   schedule:
     - cron: "0 14 * * *"
 
