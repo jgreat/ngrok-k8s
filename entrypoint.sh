@@ -4,7 +4,7 @@ set -e
 
 NGROK_HOME="/home/ngrok/.ngrok2"
 NGROK_CONFIG="${NGROK_HOME}/ngrok.yml"
-NGROK_IMPORT_CONFIG="/home/ngrok/import.ngrok.yml"
+NGROK_IMPORT_CONFIG="/maps/ngrok/ngrok.yml"
 
 if [ ! -d "${NGROK_HOME}" ]; then
     mkdir -p ${NGROK_HOME}
