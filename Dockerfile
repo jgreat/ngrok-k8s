@@ -1,4 +1,4 @@
-FROM debian:buster-slim
+FROM debian:buster-slim AS download
 
 # ngrok is designed to be self-updating, which is a pain when you want immutable images
 # URLs for download are not predictable and no public API that I can find.
@@ -13,15 +13,29 @@ FROM debian:buster-slim
 ARG NGROK_URL
 
 RUN apt-get update && \
-    apt-get install -y curl bash && \
+    apt-get install -y curl
+
+RUN curl -sS -o /tmp/ngrok.deb ${NGROK_URL}
+
+# ----------- #
+
+FROM debian:buster-slim
+
+COPY --from=download /tmp/ngrok.deb /tmp/ngrok.deb
+
+RUN useradd -m -s /bin/bash ngrok && \
+    apt-get update && \
+    apt-get install -y ca-certificates && \
+    dpkg -i /tmp/ngrok.deb && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN curl -sS -o /tmp/ngrok.deb ${NGROK_URL} && \
-    dpkg -i /tmp/ngrok.deb
-
-RUN useradd -ms /bin/bash ngrok
+    rm -rf /tmp/ngrok.deb /var/lib/apt/lists/*
 
 USER ngrok
 
-CMD [ "ngrok" ]
+ADD ./entrypoint.sh /usr/local/bin/entrypoint.sh
+
+EXPOSE 4040
+
+ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
+
+CMD [ "ngrok", "start", "--all", "--log", "stdout"]
