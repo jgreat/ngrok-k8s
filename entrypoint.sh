@@ -15,6 +15,8 @@ fi
 if [ -f ${NGROK_IMPORT_CONFIG} ]; then
     echo "Importing Config from ConfigMap"
     cp ${NGROK_IMPORT_CONFIG} ${NGROK_CONFIG}
+    # Extra newline, just in case imported with out ending new line.
+    echo "" >> ${NGROK_CONFIG}
     echo "web_addr: 0.0.0.0:4040" >> ${NGROK_CONFIG}
 fi
 
@@ -26,9 +28,9 @@ fi
 echo "Finished entrypoint.sh"
 
 if [ "${DEBUG}" ]; then
-    echo "ConfigMap Config"
+    echo "DEBUG --- ConfigMap Config ---"
     cat ${NGROK_IMPORT_CONFIG}
-    echo "ngrok Config"
+    echo "DEBUG --- NGROK Config ---"
     cat ${NGROK_CONFIG}
 fi
 
