@@ -25,4 +25,11 @@ fi
 
 echo "Finished entrypoint.sh"
 
+if [ "${DEBUG}" ]; then
+    echo "ConfigMap Config"
+    cat ${NGROK_IMPORT_CONFIG}
+    echo "ngrok Config"
+    cat ${NGROK_CONFIG}
+fi
+
 exec "$@"
