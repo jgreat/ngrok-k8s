@@ -1,5 +1,12 @@
 name: Build Ngrok Image
 
+# Manual trigger build
+# curl -H "Accept: application/vnd.github.everest-preview+json" \
+#     -H "Authorization: token ${GITHUB_TOKEN}" \
+#     --request POST \
+#     --data '{"event_type": "manual run"}' \
+#     https://api.github.com/repos/jgreat/ngrok-k8s/dispatches
+
 on:
   repository_dispatch: {}
   schedule:
