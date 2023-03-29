@@ -27,7 +27,7 @@ jobs:
         echo "NGROK_VERSION=${NGROK_VERSION}" >> $GITHUB_ENV
         echo "NGROK_URL=${NGROK_URL}" >> $GITHUB_ENV
     - name: Build and Publish Image
-      uses: elgohr/Publish-Docker-Github-Action@master
+      uses: elgohr/Publish-Docker-Github-Action@v5
       with:
         name: jgreat/ngrok
         username: ${{ secrets.DOCKER_USERNAME }}
